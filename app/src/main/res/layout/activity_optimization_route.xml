@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OptimizationRoute">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/serachingPage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Find Route" />
+    </LinearLayout>
+
+    <!-- Filter by start -->
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <!-- Filter by troggle Start-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            tools:context=".OptimizeRoute">
+
+            <TextView
+                android:id="@+id/filterByLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Filter by"
+                android:textStyle="bold" />
+
+            <ToggleButton
+                android:id="@+id/toggleFilterBy"
+                android:layout_width="43dp"
+                android:layout_height="22dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="295dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="1dp"
+                android:layout_toEndOf="@+id/filterByLabel"
+                android:background="@drawable/toggle_selector"
+                android:checked="false"
+                android:textOff=""
+                android:textOn="" />
+
+            <LinearLayout
+                android:id="@+id/checkboxContainer1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/toggleFilterBy"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Transportation troggle Start-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    tools:context=".OptimizeRoute">
+
+                    <TextView
+                        android:id="@+id/transportationLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Transportation"
+                        android:textStyle="bold" />
+
+                    <ToggleButton
+                        android:id="@+id/toggleTransportation"
+                        android:layout_width="43dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="220dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_toEndOf="@+id/transportationLabel"
+                        android:background="@drawable/toggle_selector"
+                        android:checked="false"
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <LinearLayout
+                        android:id="@+id/checkboxContainer1_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/toggleTransportation"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <CheckBox
+                            android:id="@+id/checkboxBuggy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Buggy" />
+
+                        <CheckBox
+                            android:id="@+id/checkboxBus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bus" />
+
+                        <CheckBox
+                            android:id="@+id/checkboEscooter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="E-scooter" />
+                    </LinearLayout>
+                </RelativeLayout>
+                <!-- Transportation troggle End-->
+
+                <!-- Optimization troggle Start-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    tools:context=".OptimizeRoute">
+
+                    <TextView
+                        android:id="@+id/optimizationLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Optimization"
+                        android:textStyle="bold" />
+
+                    <ToggleButton
+                        android:id="@+id/toggleOptimization"
+                        android:layout_width="43dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="232dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_toEndOf="@+id/optimizationLabel"
+                        android:background="@drawable/toggle_selector"
+                        android:checked="false"
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <LinearLayout
+                        android:id="@+id/checkboxContainer1_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/toggleOptimization"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <CheckBox
+                            android:id="@+id/checkboxNearby"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nearby" />
+
+                        <CheckBox
+                            android:id="@+id/checkboxShortest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Shortest" />
+                    </LinearLayout>
+                </RelativeLayout>
+                <!-- Transportation troggle End-->
+            </LinearLayout>
+        </RelativeLayout>
+        <!-- Filter by troggle End-->
+    </LinearLayout>
+    <!-- Filter by End -->
+
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="626dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <!--fragment to display our maps-->
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".OptimizationRoute" />
+
+            <!--search view to search our location -->
+            <SearchView
+                android:id="@+id/mapSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:queryHint="Search..."
+                app:iconifiedByDefault="false"
+                android:elevation="5dp"
+                android:background="@drawable/by_search_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
