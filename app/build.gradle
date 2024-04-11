@@ -1,5 +1,8 @@
 plugins {
     id 'com.android.application'
+
+    // Supabase
+    id "org.jetbrains.kotlin.plugin.serialization" version "1.9.23"
 }
 
 android {
@@ -37,10 +40,22 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.firebase:firebase-firestore:24.11.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
+    // Google Map
     implementation 'com.google.android.gms:play-services-maps:18.2.0'
     implementation 'com.google.android.gms:play-services-location:21.2.0'
+
+    //supabase
+    implementation platform("io.github.jan-tennert.supabase:bom:2.2.3")
+    implementation 'io.github.jan-tennert.supabase:postgrest-kt'
+    implementation 'io.github.jan-tennert.supabase:realtime-kt'
+    implementation 'io.ktor:ktor-client-android:2.3.9'
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3"
+
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'com.google.code.gson:gson:2.10'
 }
