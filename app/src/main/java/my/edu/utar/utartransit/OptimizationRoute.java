@@ -43,6 +43,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +68,7 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
     private SearchView mapSearchView;
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
-    
+
     // Supabase
     private static final String SUPABASE_URL = "https://slyrebgznitqrqnzoquz.supabase.co";
     private static final String SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNseXJlYmd6bml0cXJxbnpvcXV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MDg0MTIsImV4cCI6MjAyNzk4NDQxMn0.nPI7wkSGCBJHisTWvYOW1qNA8V6WnaZpssydh-l5Ugc";
@@ -147,6 +148,10 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
+
+        // supabase, fetch all the table data from supabase
+        fetchTableDataForBusSchedule();
+        fetchTableDataForBuggySchedule();
     }
 
     // Google Map
@@ -159,7 +164,7 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if (location != null){
+                if (location != null) {
                     currentLocation = location;
 
                     SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -187,65 +192,92 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == FINE_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLastLocation();
-            }else {
+            } else {
                 Toast.makeText(this, "Location permission is denied, please allow the permission.", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     // Supabase
-    // Fetch data from all tables in Supabase
-    private void fetchDataFromAllTables() {
+    // fetch data for bus's tables
+    private void fetchTableDataForBusSchedule() {
+        List<String> tableNames1 = Arrays.asList(
+                "bus_schedule",
+                "bus_route",
+                "bus_stops",
+                "bus_trips",
+                "bus_trip_stop",
+                "bus_period",
+                "bus_additional_trip_stop",
+                "bus_additional_trips",
+                "bus_available_date",
+                "bus_cancelled_trips"
+        );
+
         new Thread(() -> {
             try {
-                Request request = new Request.Builder()
-                        .url(SUPABASE_URL + "/rest/v1/tables")
-                        .addHeader("apikey", SUPABASE_KEY)
-                        .build();
+                for (String tableName1 : tableNames1) {
+                    String url = SUPABASE_URL + "/rest/v1/" + tableName1 + "?select=*";
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .addHeader("apikey", SUPABASE_KEY)
+                            .build();
 
-                try (Response response = client.newCall(request).execute()) {
-                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                    try (Response response = client.newCall(request).execute()) {
+                        if (!response.isSuccessful()) {
+                            throw new IOException("Unexpected code " + response);
+                        }
 
-                    String responseBody = response.body().string();
-                    JSONArray tablesArray = new JSONArray(responseBody);
+                        String responseBody = response.body().string();
+                        Log.d("Supabase", "Table " + tableName1 + " Data: " + responseBody);
 
-                    List<String> tableNames = new ArrayList<>();
-                    for (int i = 0; i < tablesArray.length(); i++) {
-                        JSONObject tableObject = tablesArray.getJSONObject(i);
-                        String tableName = tableObject.getString("table_name");
-                        tableNames.add(tableName);
-                        Log.d("Supabase", "Table Name: " + tableName);
-                    }
-
-                    // Now fetch data from each table
-                    for (String tableName : tableNames) {
-                        fetchDataFromTable(tableName);
+                        // Parse responseBody using Gson into your model classes if needed
+                        // Example: YourModelClass model = gson.fromJson(responseBody, YourModelClass.class);
                     }
                 }
-            } catch (IOException | JSONException e) {
-                Log.e("Supabase", "Error fetching data: " + e.getMessage());
+            } catch (IOException e) {
+                Log.e("Supabase", "Error fetching table data: " + e.getMessage());
             }
         }).start();
     }
 
-    private void fetchDataFromTable(String tableName) {
-        Request request = new Request.Builder()
-                .url(SUPABASE_URL + "/rest/v1/" + tableName)
-                .addHeader("apikey", SUPABASE_KEY)
-                .build();
+    // fetch data for buggy's tables
+    private void fetchTableDataForBuggySchedule() {
+        List<String> tableNames2 = Arrays.asList(
+                "buggy_schedule",
+                "buggy_stops",
+                "buggy_trips",
+                "buggy_trip_stop",
+                "buggy_cancelled_trip",
+                "buggy_is_cancelled"
+        );
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        new Thread(() -> {
+            try {
+                for (String tableName2 : tableNames2) {
+                    String url = SUPABASE_URL + "/rest/v1/" + tableName2 + "?select=*";
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .addHeader("apikey", SUPABASE_KEY)
+                            .build();
 
-            String responseBody = response.body().string();
-            Log.d("Supabase", "Table " + tableName + " Data: " + responseBody);
+                    try (Response response = client.newCall(request).execute()) {
+                        if (!response.isSuccessful()) {
+                            throw new IOException("Unexpected code " + response);
+                        }
 
-            // Parse responseBody using Gson into your model classes if needed
-            // YourModelClass model = gson.fromJson(responseBody, YourModelClass.class);
-        } catch (IOException e) {
-            Log.e("Supabase", "Error fetching data from table " + tableName + ": " + e.getMessage());
-        }
+                        String responseBody = response.body().string();
+                        Log.d("Supabase", "Table " + tableName2 + " Data: " + responseBody);
+
+                        // Parse responseBody using Gson into your model classes if needed
+                        // Example: YourModelClass model = gson.fromJson(responseBody, YourModelClass.class);
+                    }
+                }
+            } catch (IOException e) {
+                Log.e("Supabase", "Error fetching table data: " + e.getMessage());
+            }
+        }).start();
     }
 }
