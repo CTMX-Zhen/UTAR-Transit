@@ -200,8 +200,9 @@
     <!-- Filter by End -->
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="626dp"
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -211,29 +212,63 @@
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
-            <!--fragment to display our maps-->
-            <fragment
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".OptimizationRoute" />
+            <!-- Departure Place Spinner -->
+            <Spinner
+                android:id="@+id/spinnerDeparture"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="22dp"
+                android:layout_weight="1"
+                android:prompt="@string/select_departure_place" />
 
-            <!--search view to search our location -->
-            <SearchView
-                android:id="@+id/mapSearch"
+            <!-- switch departure and arrival  -->
+            <Button
+                android:id="@+id/switchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/spinnerArrival"
+                android:layout_below="@+id/spinnerDeparture"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="166dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="155dp"
+                android:layout_marginBottom="15dp"
+                android:text="↑↓"
+                android:textSize="20sp" />
+
+            <!-- Arrival Place Spinner -->
+            <Spinner
+                android:id="@+id/spinnerArrival"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/buttonFindRoute"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
+                android:prompt="@string/select_arrival_place" />
+
+            <!-- Find Route function -->
+            <Button
+                android:id="@+id/buttonFindRoute"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:queryHint="Search..."
-                app:iconifiedByDefault="false"
-                android:elevation="5dp"
-                android:background="@drawable/by_search_view"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:text="Find Route" />
         </RelativeLayout>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
