@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">UTAR Transit</string>
+    <string name="select_departure_place">Select Departure Place</string>
+    <string name="select_arrival_place">Select Departure Place</string>
 </resources>
