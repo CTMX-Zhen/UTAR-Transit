@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
                 replaceFragment(new FavouriteFragment());
             } else if (item.getItemId() == R.id.time_btn) {
-                //replaceFragment(new TimeFragment());
+                replaceFragment(new TimeFragment());
             } else if (item.getItemId() == R.id.notification_btn) {
                 //replaceFragment(new ());
             }
