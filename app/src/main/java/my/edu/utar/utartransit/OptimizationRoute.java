@@ -1,6 +1,7 @@
 package my.edu.utar.utartransit;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -27,6 +28,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -121,7 +124,9 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
                     }
                     Address address = addressList.get(0);
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(latLng).title(location));
+                    // Create a custom marker icon for searched locations (Blue color)
+                    BitmapDescriptor searchedLocationIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
+                    mMap.addMarker(new MarkerOptions().position(latLng).title(location).icon(searchedLocationIcon));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
                 }
                 return false;
@@ -227,6 +232,37 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
                 spinnerArrival.setSelection(departureAdapter.getPosition(selectedDeparture));
             }
         });
+
+        //buttonFindRoute
+        buttonFindRoute = findViewById(R.id.buttonFindRoute);
+        buttonFindRoute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the selected items from spinners
+                String selectedDeparture = spinnerDeparture.getSelectedItem().toString();
+                String selectedArrival = spinnerArrival.getSelectedItem().toString();
+
+                // Get the latitude and longitude for the selected departure and arrival
+                double departureLatitude = stopLatitudes.get(stopNames.indexOf(selectedDeparture));
+                double departureLongitude = stopLongitudes.get(stopNames.indexOf(selectedDeparture));
+                double arrivalLatitude = stopLatitudes.get(stopNames.indexOf(selectedArrival));
+                double arrivalLongitude = stopLongitudes.get(stopNames.indexOf(selectedArrival));
+
+                // Create an Intent to navigate to FindRoute activity
+                Intent intent = new Intent(OptimizationRoute.this, FindRoute.class);
+
+                // Pass selected data to the next activity
+                intent.putExtra("departureName", selectedDeparture);
+                intent.putExtra("departureLatitude", departureLatitude);
+                intent.putExtra("departureLongitude", departureLongitude);
+                intent.putExtra("arrivalName", selectedArrival);
+                intent.putExtra("arrivalLatitude", arrivalLatitude);
+                intent.putExtra("arrivalLongitude", arrivalLongitude);
+
+                // Start the FindRoute activity
+                startActivity(intent);
+            }
+        });
     }
 
     // Google Map
@@ -251,12 +287,31 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-
         mMap = googleMap;
-        LatLng location = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(location).title("My Location"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 13));
 
+        // Display current location with a custom marker icon (Red color)
+        if (currentLocation != null) {
+            LatLng currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+            BitmapDescriptor currentLocationIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
+            mMap.addMarker(new MarkerOptions().position(currentLatLng).title("My Location").icon(currentLocationIcon));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
+        }
+
+        // Loop to add marker for the list of stops
+        for (int i = 0; i < stopNames.size(); i++){
+            String stopName = stopNames.get(i);
+            double latitude = stopLatitudes.get(i);
+            double longitude = stopLongitudes.get(i);
+
+            // create LatLng object for the stop location
+            LatLng stopLatLng = new LatLng(latitude, longitude);
+
+            // Create a green marker icon for stops
+            BitmapDescriptor stopIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+            mMap.addMarker(new MarkerOptions().position(stopLatLng).title(stopName).icon(stopIcon));
+        }
+
+        // UI settings
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);

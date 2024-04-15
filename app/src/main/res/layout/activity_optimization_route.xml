@@ -56,14 +56,17 @@
                     android:id="@+id/mapSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    app:queryHint="Search..."
-                    app:iconifiedByDefault="false"
-                    android:elevation="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/by_search_view"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:elevation="5dp"
+                    app:iconifiedByDefault="false"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:queryHint="Search..." />
             </RelativeLayout>
         </LinearLayout>
 
