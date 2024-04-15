@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashScreen extends AppCompatActivity {
-    public static final int SPLASH_TIMEOUT = 2500;
+    public static final int SPLASH_TIMEOUT = 3000;
     ImageView Roadmap, Transportimage;
     TextView text1, text2;
 
