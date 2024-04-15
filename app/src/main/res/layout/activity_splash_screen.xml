@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashScreen">
+
+    <ImageView
+        android:id="@+id/roadmap"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/home_icon"/>
+    <ImageView
+        android:id="@+id/transportation"
+        android:layout_width="200dp"
+        android:layout_height="120dp"
+        android:src="@drawable/heart_icon"
+        android:layout_alignBottom="@+id/roadmap"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="65dp" />
+    <TextView
+        android:id="@+id/ss_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UTAR-Transit"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_below="@+id/transportation"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/ss_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:text="Find your transportation everywhere \n around UTAR"
+        android:gravity="center"
+        android:layout_below="@+id/ss_text1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
+</RelativeLayout>

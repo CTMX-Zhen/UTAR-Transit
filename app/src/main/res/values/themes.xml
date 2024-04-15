@@ -8,5 +8,8 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.UTARTransit" parent="Base.Theme.UTARTransit" />
+    <style name="Theme.UTARTransit" parent="Base.Theme.UTARTransit">
+
+
+    </style>
 </resources>
