@@ -17,6 +17,12 @@
         android:theme="@style/Theme.UTARTransit"
         tools:targetApi="31">
         <activity
+            android:name=".BusTimetableAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".BeamPage"
+            android:exported="false" />
+        <activity
             android:name=".FindRoute"
             android:exported="false" />
         <activity
