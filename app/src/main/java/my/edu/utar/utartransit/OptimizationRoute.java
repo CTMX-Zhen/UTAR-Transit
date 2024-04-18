@@ -402,6 +402,8 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
                             double longitude = jsonObject.getDouble("longitude");
                             addUniqueStop(stopName, latitude, longitude);
                         }
+                        // Log the fetched data
+                        Log.d("Supabase", "Stop Name: " + stopNames + ", Latitude: " + stopLatitudes + ", Longitude: " + stopLongitudes);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
