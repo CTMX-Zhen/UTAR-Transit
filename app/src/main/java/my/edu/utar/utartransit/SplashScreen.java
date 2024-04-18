@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashScreen extends AppCompatActivity {
     public static final int SPLASH_TIMEOUT = 3000;
-    ImageView Roadmap, Transportimage;
+    ImageView Logo, Roadmap, Transportimage;
     TextView text1, text2;
 
     Animation Top_anim, Bottom_anim, Left_anim;
@@ -22,6 +22,7 @@ public class SplashScreen extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        //Logo=findViewById(R.id.logo);
         Roadmap=findViewById(R.id.roadmap);
         Transportimage=findViewById(R.id.transportation);
         text1=findViewById(R.id.ss_text1);
@@ -31,6 +32,7 @@ public class SplashScreen extends AppCompatActivity {
         Bottom_anim=AnimationUtils.loadAnimation(this,R.anim.bottomanim);
         Left_anim=AnimationUtils.loadAnimation(this,R.anim.leftanim);
 
+        //Logo.setAnimation(Top_anim);
         Roadmap.setAnimation(Top_anim);
         Transportimage.setAnimation(Left_anim);
         text1.setAnimation(Bottom_anim);
@@ -48,6 +50,5 @@ public class SplashScreen extends AppCompatActivity {
                 finish();
             }
         }, SPLASH_TIMEOUT);
-
     }
 }
