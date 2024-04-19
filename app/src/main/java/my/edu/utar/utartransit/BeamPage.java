@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -177,8 +178,9 @@ public class BeamPage extends AppCompatActivity implements OnMapReadyCallback {
             // create LatLng object for the stop location
             LatLng stopLatLng = new LatLng(latitude, longitude);
 
-            // Create a green marker icon for stops
-            BitmapDescriptor stopIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+            // Create a purple marker icon for stops
+            int markerColor = Color.parseColor("#800080");
+            BitmapDescriptor stopIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET);
             mMap.addMarker(new MarkerOptions().position(stopLatLng).title(locationName).icon(stopIcon));
         }
 

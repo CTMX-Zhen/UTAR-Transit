@@ -262,7 +262,7 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
                 double arrivalLongitude = stopLongitudes.get(stopNames.indexOf(selectedArrival));
 
                 // Create an Intent to navigate to FindRoute activity
-                Intent intent = new Intent(OptimizationRoute.this, FindRoute.class);
+                Intent intent = new Intent(OptimizationRoute.this, BeamPage.class);
 
                 // Pass selected data to the next activity
                 intent.putExtra("departureName", selectedDeparture);
