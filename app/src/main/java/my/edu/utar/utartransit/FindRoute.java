@@ -157,6 +157,7 @@ public class FindRoute extends AppCompatActivity implements OnMapReadyCallback {
                 // Display nearest trip for bus
                 displayNearestTrip("bus");
                 linearLayout4.setVisibility(View.VISIBLE);
+                Toast.makeText(FindRoute.this, "Display nearest trip for bus.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -166,6 +167,7 @@ public class FindRoute extends AppCompatActivity implements OnMapReadyCallback {
                 // Display nearest trip for buggy
                 displayNearestTrip("buggy");
                 linearLayout4.setVisibility(View.VISIBLE);
+                Toast.makeText(FindRoute.this, "Display nearest trip for buggy.", Toast.LENGTH_SHORT).show();
             }
         });
     }
