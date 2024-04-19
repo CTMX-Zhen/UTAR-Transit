@@ -1,11 +1,11 @@
 package my.edu.utar.utartransit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
+import android.widget.GridLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 
-import my.edu.utar.utartransit.databinding.ActivityMainBinding;
+import androidx.fragment.app.Fragment;
+
 import my.edu.utar.utartransit.databinding.FragmentTimetableBinding;
 
 
@@ -106,7 +107,41 @@ public class TimetableFragment extends Fragment {
                 }
             }
         };
+        View.OnClickListener cardClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Launch full-screen view with the clicked image
+                int imageResId = 0;
+                if(v.getId()==R.id.card_view1) {
 
+                    imageResId = R.drawable.standford_ck_mahsuri;
+                }
+                if(v.getId()==R.id.card_view2){
+                    imageResId = R.drawable.mahsuri;
+                }
+                if(v.getId()==R.id.card_view3) {
+
+                    imageResId = R.drawable.havard_cambridge;
+                }
+                if(v.getId()==R.id.card_view4){
+                    imageResId = R.drawable.havard_cambridge_westlake;
+                }
+                if(v.getId()==R.id.card_view5) {
+
+                    imageResId = R.drawable.westlake_all;
+                }
+
+                if ( imageResId != 0) {
+                    showFullScreenImage(imageResId);
+                }
+            }
+        };
+
+        binding.cardView1.setOnClickListener(cardClickListener);
+        binding.cardView2.setOnClickListener(cardClickListener);
+        binding.cardView3.setOnClickListener(cardClickListener);
+        binding.cardView4.setOnClickListener(cardClickListener);
+        binding.cardView5.setOnClickListener(cardClickListener);
         binding.checkBox1.setOnClickListener(onClickListener);
         binding.checkBox2.setOnClickListener(onClickListener);
         binding.checkBox3.setOnClickListener(onClickListener);
@@ -152,5 +187,10 @@ public class TimetableFragment extends Fragment {
             binding.checkBox5.setChecked(true);
         }
 
+    }
+    private void showFullScreenImage(int imageResId) {
+        Intent intent = new Intent(requireContext(), FullScreenImageActivity.class);
+        intent.putExtra("imageResId", imageResId);
+        startActivity(intent);
     }
 }

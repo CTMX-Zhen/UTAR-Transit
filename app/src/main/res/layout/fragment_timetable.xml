@@ -15,8 +15,9 @@
 
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:id="@+id/card_view1"
             android:layout_row="0"
             android:layout_rowWeight="1"
             android:layout_column="0"
@@ -44,7 +45,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="home" />
+                    android:text="Standford-CK-Mahsuri" />
 
             </LinearLayout>
 
@@ -62,8 +63,9 @@
 
         <androidx.cardview.widget.CardView
 
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:id="@+id/card_view2"
             android:layout_row="0"
             android:layout_rowWeight="1"
             android:layout_column="1"
@@ -91,7 +93,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="home" />
+                    android:text="Mahsuri" />
             </LinearLayout>
             <CheckBox
                 android:id="@+id/checkBox2"
@@ -105,8 +107,9 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:id="@+id/card_view3"
             android:layout_row="1"
             android:layout_rowWeight="1"
             android:layout_column="0"
@@ -134,7 +137,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="home" />
+                    android:text="Havard-cambridge" />
             </LinearLayout>
             <CheckBox
                 android:id="@+id/checkBox3"
@@ -148,8 +151,9 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:id="@+id/card_view4"
             android:layout_row="1"
             android:layout_rowWeight="1"
             android:layout_column="1"
@@ -177,7 +181,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="home" />
+                    android:text="Havard-Cambridge-Westlake" />
             </LinearLayout>
             <CheckBox
                 android:id="@+id/checkBox4"
@@ -191,8 +195,9 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:id="@+id/card_view5"
             android:layout_row="2"
             android:layout_rowWeight="1"
             android:layout_column="0"
@@ -220,7 +225,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="home" />
+                    android:text="Westlake" />
             </LinearLayout>
             <CheckBox
                 android:id="@+id/checkBox5"
