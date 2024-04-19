@@ -323,20 +323,6 @@ public class OptimizationRoute extends Fragment implements OnMapReadyCallback {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
         }
 
-        // Loop to add marker for the list of stops
-        for (int i = 0; i < stopNames.size(); i++){
-            String stopName = stopNames.get(i);
-            double latitude = stopLatitudes.get(i);
-            double longitude = stopLongitudes.get(i);
-
-            // create LatLng object for the stop location
-            LatLng stopLatLng = new LatLng(latitude, longitude);
-
-            // Create a green marker icon for stops
-            BitmapDescriptor stopIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
-            mMap.addMarker(new MarkerOptions().position(stopLatLng).title(stopName).icon(stopIcon));
-        }
-
         // UI settings
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
@@ -352,6 +338,22 @@ public class OptimizationRoute extends Fragment implements OnMapReadyCallback {
             }else {
                 Toast.makeText(requireContext(), "Location permission is denied, please allow the permission.", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void addMarkersToMap() {
+        // Loop to add marker for the list of stops
+        for (int i = 0; i < stopNames.size(); i++){
+            String stopName = stopNames.get(i);
+            double latitude = stopLatitudes.get(i);
+            double longitude = stopLongitudes.get(i);
+
+            // create LatLng object for the stop location
+            LatLng stopLatLng = new LatLng(latitude, longitude);
+
+            // Create a green marker icon for stops
+            BitmapDescriptor stopIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+            mMap.addMarker(new MarkerOptions().position(stopLatLng).title(stopName).icon(stopIcon));
         }
     }
 
@@ -434,6 +436,7 @@ public class OptimizationRoute extends Fragment implements OnMapReadyCallback {
                             public void run() {
                                 departureAdapter.notifyDataSetChanged();
                                 arrivalAdapter.notifyDataSetChanged();
+                                addMarkersToMap();
                             }
                         });
                     } catch (JSONException e) {
