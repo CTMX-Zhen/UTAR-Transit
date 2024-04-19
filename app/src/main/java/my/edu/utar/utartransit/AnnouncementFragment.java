@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.util.Log;
@@ -21,12 +23,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import my.edu.utar.utartransit.databinding.FragmentAnnouncementBinding;
 import my.edu.utar.utartransit.databinding.FragmentTimetableBinding;
 
 
 public class AnnouncementFragment extends Fragment {
+
 
     private FragmentAnnouncementBinding binding;
     private JSONArray jsonArray;
@@ -103,20 +108,32 @@ public class AnnouncementFragment extends Fragment {
     }
 
     private void updateUI() {
+        RecyclerView recyclerView = getView().findViewById(R.id.recycle_view);
+
+
         if (jsonArray != null) {
+            List<Item> items = new ArrayList<Item>();
+
+
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = jsonArray.getJSONObject(i);
                     String announcementTitle = jsonObject.getString("a_title");
+                    String date = jsonObject.getString("created_at");
+                    String imageURL = jsonObject.getString("a_image_link");
+                    items.add(new Item(date,announcementTitle,imageURL));
                     TextView textView = new TextView(requireContext());
                     textView.setText(announcementTitle);
-                    binding.recycleView.addView(textView);
+                    //binding.recycleView.addView(textView);
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
                 Log.i("MainActivity2", "Element " + i + ": " + jsonObject.toString());
             }
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+            recyclerView.setAdapter(new RVAdapter(requireContext().getApplicationContext(),items));
         }
     }
     private String readStream(InputStream is) {
