@@ -18,12 +18,12 @@
 
     <item
         android:id="@+id/time_btn"
-        android:title="Time"
-        android:icon="@drawable/time_icon"/>
+        android:title="Timetable"
+        android:icon="@drawable/timetable_icon"/>
 
     <item
         android:id="@+id/notification_btn"
-        android:title="Notification"
+        android:title="Announcement"
         android:icon="@drawable/announcement_icon"/>
 
 

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".OptimizationRoute">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+            <TextView
+                android:id="@+id/serachingPage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Find Route" />
+        </LinearLayout>
+
+        <!-- Google Map -->
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--fragment to display maps-->
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context=".OptimizationRoute" />
+
+                <!--search view to search location -->
+                <SearchView
+                    android:id="@+id/mapSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/by_search_view"
+                    android:elevation="5dp"
+                    app:iconifiedByDefault="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:queryHint="Search..." />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!-- Filter by start -->
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <!-- Filter by troggle Start-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                tools:context=".OptimizeRoute">
+
+                <TextView
+                    android:id="@+id/filterByLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Filter by"
+                    android:textStyle="bold" />
+
+                <ToggleButton
+                    android:id="@+id/toggleFilterBy"
+                    android:layout_width="31dp"
+                    android:layout_height="19dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="279dp"
+                    android:layout_toEndOf="@+id/filterByLabel"
+                    android:background="@drawable/toggle_selector"
+                    android:checked="false"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <LinearLayout
+                    android:id="@+id/checkboxContainer1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/toggleFilterBy"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <!-- Transportation troggle Start-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        tools:context=".OptimizeRoute">
+
+                        <TextView
+                            android:id="@+id/transportationLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="16dp"
+                            android:text="Transportation"
+                            android:textStyle="bold" />
+
+                        <ToggleButton
+                            android:id="@+id/toggleTransportation"
+                            android:layout_width="33dp"
+                            android:layout_height="19dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="201dp"
+                            android:layout_toEndOf="@+id/transportationLabel"
+                            android:background="@drawable/toggle_selector"
+                            android:checked="false"
+                            android:textOff=""
+                            android:textOn="" />
+
+                        <LinearLayout
+                            android:id="@+id/checkboxContainer1_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/toggleTransportation"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <CheckBox
+                                android:id="@+id/checkboxBuggy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Buggy" />
+
+                            <CheckBox
+                                android:id="@+id/checkboxBus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Bus" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                    <!-- Transportation troggle End-->
+                </LinearLayout>
+            </RelativeLayout>
+            <!-- Filter by troggle End-->
+        </LinearLayout>
+        <!-- Filter by End -->
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <!-- Departure Place Spinner -->
+                <Spinner
+                    android:id="@+id/spinnerDeparture"
+                    android:layout_width="400dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="22dp"
+                    android:layout_weight="1"
+                    android:prompt="@string/select_departure_place" />
+
+                <!-- switch departure and arrival  -->
+                <Button
+                    android:id="@+id/switchButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/spinnerArrival"
+                    android:layout_below="@+id/spinnerDeparture"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="166dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="155dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="↑↓"
+                    android:textSize="20sp" />
+
+                <!-- Arrival Place Spinner -->
+                <Spinner
+                    android:id="@+id/spinnerArrival"
+                    android:layout_width="400dp"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/buttonFindRoute"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:prompt="@string/select_arrival_place" />
+
+                <!-- Find Route function -->
+                <Button
+                    android:id="@+id/buttonFindRoute"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:text="Find Route" />
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

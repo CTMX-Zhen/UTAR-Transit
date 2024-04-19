@@ -7,13 +7,16 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/frame_layout"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#e3e3e3"
-        android:id="@+id/frame_layout">
+        android:orientation="vertical"
+        android:layout_marginBottom="60dp"
+        android:background="#FFF3E2">
 
-    </FrameLayout>
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
