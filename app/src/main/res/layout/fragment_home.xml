@@ -30,11 +30,11 @@
 
                     <ImageView
                         android:id="@+id/imageView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="35dp"
-                        android:src="@android:drawable/ic_dialog_map"
+                        android:layout_width="100dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/map_icon"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,11 +43,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="52dp"
                         android:text="@string/hello_utarian"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="40dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/notification_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.956"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.2" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -76,7 +89,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="300dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,17 +102,21 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="sans-serif-black"
-                        android:text="Buildings in UTAR"
+                        android:text="Buildings in UTAR :"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:layout_marginStart="10dp"
-                        tools:src="@tools:sample/backgrounds/scenic" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/RV_build1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:paddingStart="8dp"
+
+                        android:paddingEnd="8dp" />
+
+
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -109,6 +126,7 @@
                 android:layout_width="153dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/transport_options"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -121,7 +139,7 @@
                 android:gravity="center">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/CardView1"
+                    android:id="@+id/buggy_cv"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
@@ -157,13 +175,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Buggy"
-                            android:textAlignment="center" />
+                            android:textAlignment="center"
+                            android:textColor="#673AB7"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/CardView2"
+                    android:id="@+id/bus_cv"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
@@ -199,13 +219,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Bus"
-                            android:textAlignment="center" />
+                            android:textAlignment="center"
+                            android:textColor="#673AB7"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/CardView3"
+                    android:id="@+id/escooter_cv"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
@@ -241,242 +263,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="E-Scooter"
-                            android:textAlignment="center" />
+                            android:textAlignment="center"
+                            android:textColor="#673AB7"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
-
-            <GridLayout
-                android:id="@+id/announcement_grid_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_row="3"
-                android:layout_column="2"
-                tools:context=".TimetableFragment">
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="0"
-                    android:layout_rowWeight="1"
-                    android:layout_column="0"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="fill"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="15dp"
-                    app:cardElevation="15dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="8dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/standford_ck_mahsuri" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="home" />
-
-                    </LinearLayout>
-
-                    <CheckBox
-                        android:id="@+id/checkBox1"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="top|end"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/checkbox_background"
-                        android:button="@drawable/selector_favourite_item"
-                        android:elevation="10dp" />
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="0"
-                    android:layout_rowWeight="1"
-                    android:layout_column="1"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="fill"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="15dp"
-                    app:cardElevation="8dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="8dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/mahsuri" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="home" />
-                    </LinearLayout>
-                    <CheckBox
-                        android:id="@+id/checkBox2"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="top|end"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/checkbox_background"
-                        android:button="@drawable/selector_favourite_item"
-                        android:elevation="10dp" />
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_rowWeight="1"
-                    android:layout_column="0"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="fill"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="15dp"
-                    app:cardElevation="8dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="8dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/havard_cambridge" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="home" />
-                    </LinearLayout>
-                    <CheckBox
-                        android:id="@+id/checkBox3"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="top|end"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/checkbox_background"
-                        android:button="@drawable/selector_favourite_item"
-                        android:elevation="10dp" />
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_rowWeight="1"
-                    android:layout_column="1"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="fill"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="15dp"
-                    app:cardElevation="8dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="8dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/havard_cambridge_westlake" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="home" />
-                    </LinearLayout>
-                    <CheckBox
-                        android:id="@+id/checkBox4"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="top|end"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/checkbox_background"
-                        android:button="@drawable/selector_favourite_item"
-                        android:elevation="10dp" />
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="2"
-                    android:layout_rowWeight="1"
-                    android:layout_column="0"
-                    android:layout_columnWeight="1"
-                    android:layout_gravity="fill"
-                    android:layout_margin="8dp"
-                    app:cardCornerRadius="15dp"
-                    app:cardElevation="8dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="8dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/westlake_all" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="home" />
-                    </LinearLayout>
-                    <CheckBox
-                        android:id="@+id/checkBox5"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="top|end"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/checkbox_background"
-                        android:button="@drawable/selector_favourite_item"
-                        android:elevation="10dp" />
-                </androidx.cardview.widget.CardView>
-
-
-            </GridLayout>
 
 
         </LinearLayout>
