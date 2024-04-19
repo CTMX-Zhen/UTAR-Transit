@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -145,6 +146,26 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
         getLastLocation();
 
         // Filtter by
+        // Get references to the TextViews
+        TextView filterByLabel = findViewById(R.id.filterByLabel);
+        TextView transportationLabel = findViewById(R.id.transportationLabel);
+
+        filterByLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the state of toggleFilterBy
+                toggleFilterBy.setChecked(!toggleFilterBy.isChecked());
+            }
+        });
+
+        transportationLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the state of toggleTransportation
+                toggleTransportation.setChecked(!toggleTransportation.isChecked());
+            }
+        });
+
         toggleFilterBy = findViewById(R.id.toggleFilterBy);
         checkboxContainer1 = findViewById(R.id.checkboxContainer1);
 
