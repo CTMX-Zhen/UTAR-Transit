@@ -46,7 +46,7 @@ public class BuggyTimetableFragment extends Fragment {
 //                        //check=true;
 //                    }
 
-                    recordTimetableAsChecked("Timetable 6", check); // Record timetable as checked
+                    recordTimetableAsChecked("Timetable 6", check,R.drawable.e_buggy); // Record timetable as checked
                 }
             }
         };
@@ -70,14 +70,14 @@ public class BuggyTimetableFragment extends Fragment {
         return view;
     }
 
-    private void recordTimetableAsChecked(String timetable, boolean checked) {
+    private void recordTimetableAsChecked(String timetable, boolean checked, int imageId) {
         // Store the checked timetable in SharedPreferences or SQLite database
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("CheckedTimetables", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (checked) {
-            editor.putBoolean(timetable, true);
+            editor.putInt(timetable, imageId);
         } else {
-            editor.putBoolean(timetable, false);
+            editor.putInt(timetable, 0);
         }
 
         editor.apply();
@@ -86,7 +86,7 @@ public class BuggyTimetableFragment extends Fragment {
     private void checkFavourite() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("CheckedTimetables", Context.MODE_PRIVATE);
 
-        if (sharedPreferences.getBoolean("Timetable 6", false)) {
+        if (sharedPreferences.getInt("Timetable 6", 0)!=0) {
             binding.checkBox6.setChecked(true);
         }
 

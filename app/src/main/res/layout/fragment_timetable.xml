@@ -9,7 +9,7 @@
         android:id="@+id/announcement_grid_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_row="3"
+        android:layout_row="4"
         android:layout_column="2"
         tools:context=".TimetableFragment">
 

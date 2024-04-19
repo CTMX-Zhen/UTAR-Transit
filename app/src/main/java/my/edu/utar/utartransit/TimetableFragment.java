@@ -43,11 +43,7 @@ public class TimetableFragment extends Fragment {
                         //update database
                         check = false;
                     }
-//                    else{
-//                        //check=true;
-//                    }
-
-                    recordTimetableAsChecked("Timetable 1",check); // Record timetable as checked
+                    recordTimetableAsChecked("Timetable 1",check, R.drawable.standford_ck_mahsuri,"standford_ck_mahsuri"); // Record timetable as checked
 
                 } else if (v.getId() == R.id.checkBox2) {
                     Log.i("Debug","The check2 clicked");
@@ -61,7 +57,7 @@ public class TimetableFragment extends Fragment {
 //                        check=true;
 //                    }
 
-                    recordTimetableAsChecked("Timetable 2",check);
+                    recordTimetableAsChecked("Timetable 2",check,R.drawable.mahsuri,"mahsuri");
                 } else if (v.getId() == R.id.checkBox3) {
                     Log.i("Debug","The check3 clicked");
 
@@ -71,11 +67,8 @@ public class TimetableFragment extends Fragment {
                         //update database
                         check = false;
                     }
-//                    else{
-//                        check=true;
-//                    }
-
-                    recordTimetableAsChecked("Timetable 3",check);
+//
+                    recordTimetableAsChecked("Timetable 3",check,R.drawable.havard_cambridge,"havard_cambridge");
                 }else if (v.getId() == R.id.checkBox4) {
                     Log.i("Debug","The check4 clicked");
 
@@ -89,7 +82,7 @@ public class TimetableFragment extends Fragment {
 //                        check=true;
 //                    }
 
-                    recordTimetableAsChecked("Timetable 4",check);
+                    recordTimetableAsChecked("Timetable 4",check,R.drawable.havard_cambridge_westlake,"havard_cambridge_westlake");
                 }else if (v.getId() == R.id.checkBox5) {
                     Log.i("Debug","The check5 clicked");
 
@@ -103,7 +96,7 @@ public class TimetableFragment extends Fragment {
 //                        check=true;
 //                    }
 
-                    recordTimetableAsChecked("Timetable 5",check);
+                    recordTimetableAsChecked("Timetable 5",check,R.drawable.westlake_all,"westlake_all");
                 }
             }
         };
@@ -156,34 +149,42 @@ public class TimetableFragment extends Fragment {
     }
     //function to check if the item is in the favourite
 
-    private void recordTimetableAsChecked(String timetable, boolean checked) {
+    private void recordTimetableAsChecked(String timetable, boolean checked, int imageId,String imageName) {
         // Store the checked timetable in SharedPreferences or SQLite database
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("CheckedTimetables", Context.MODE_PRIVATE);
+        SharedPreferences sharedTimetable = getActivity().getSharedPreferences("TimetableName", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editName = sharedTimetable.edit();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if(checked){
-            editor.putBoolean(timetable, true);
+            //editor.putBoolean(timetable, true);
+            editName.putString(timetable,imageName);
+            editor.putInt(timetable,imageId);
         }else{
-            editor.putBoolean(timetable,false);
+            //editor.putBoolean(timetable,false);
+            editName.putString(timetable,imageName);
+            editor.putInt(timetable,0);
         }
 
         editor.apply();
+        editName.apply();
     }
 
     private void checkFavourite(){
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("CheckedTimetables", Context.MODE_PRIVATE);
-        if(sharedPreferences.getBoolean("Timetable 1",false)){
+        if(sharedPreferences.getInt("Timetable 1",0)!=0){
             binding.checkBox1.setChecked(true);
         }
-        if(sharedPreferences.getBoolean("Timetable 2",false)) {
+        if(sharedPreferences.getInt("Timetable 2",0)!=0) {
             binding.checkBox2.setChecked(true);
         }
-        if(sharedPreferences.getBoolean("Timetable 3",false)) {
+        if(sharedPreferences.getInt("Timetable 3",0)!=0) {
             binding.checkBox3.setChecked(true);
         }
-        if(sharedPreferences.getBoolean("Timetable 4",false)) {
+        if(sharedPreferences.getInt("Timetable 4",0)!=0) {
             binding.checkBox4.setChecked(true);
         }
-        if(sharedPreferences.getBoolean("Timetable 5",false)) {
+        if(sharedPreferences.getInt("Timetable 5",0)!=0) {
             binding.checkBox5.setChecked(true);
         }
 
