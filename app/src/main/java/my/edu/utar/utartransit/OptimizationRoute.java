@@ -1,5 +1,7 @@
 package my.edu.utar.utartransit;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,7 +10,9 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,6 +27,7 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -53,7 +58,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCallback {
+public class OptimizationRoute extends Fragment implements OnMapReadyCallback {
 
     // Google Map
     private final int FINE_PERMISSION_CODE = 1;
@@ -91,69 +96,23 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
     private Button switchButton;;
     private Button buttonFindRoute;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_optimization_route);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.activity_optimization_route, container, false);
 
         // Google Map
-        mapSearchView = findViewById(R.id.mapSearch);
+        mapSearchView = view.findViewById(R.id.mapSearch);
         mapSearchView.setQueryHint("Search...");
 
-        mapSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                String location = mapSearchView.getQuery().toString();
-                List<Address> addressList = null;
-                if (location != null){
-                    Geocoder geocoder = new Geocoder(OptimizationRoute.this);
-                    try {
-                        addressList = geocoder.getFromLocationName(location, 1);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Address address = addressList.get(0);
-                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                    // Create a custom marker icon for searched locations (Blue color)
-                    BitmapDescriptor searchedLocationIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
-                    mMap.addMarker(new MarkerOptions().position(latLng).title(location).icon(searchedLocationIcon));
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        getLastLocation();
+        // Initialize fusedLocationProviderClient
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
         // Filtter by
-        // Get references to the TextViews
-        TextView filterByLabel = findViewById(R.id.filterByLabel);
-        TextView transportationLabel = findViewById(R.id.transportationLabel);
-
-        filterByLabel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle the state of toggleFilterBy
-                toggleFilterBy.setChecked(!toggleFilterBy.isChecked());
-            }
-        });
-
-        transportationLabel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle the state of toggleTransportation
-                toggleTransportation.setChecked(!toggleTransportation.isChecked());
-            }
-        });
-
-        toggleFilterBy = findViewById(R.id.toggleFilterBy);
-        checkboxContainer1 = findViewById(R.id.checkboxContainer1);
+        toggleFilterBy = view.findViewById(R.id.toggleFilterBy);
+        checkboxContainer1 = view.findViewById(R.id.checkboxContainer1);
 
         toggleFilterBy.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -163,9 +122,9 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
             }
         });
 
-        // transportation
-        toggleTransportation = findViewById(R.id.toggleTransportation);
-        checkboxContainer1_1 = findViewById(R.id.checkboxContainer1_1);
+        // Transportation
+        toggleTransportation = view.findViewById(R.id.toggleTransportation);
+        checkboxContainer1_1 = view.findViewById(R.id.checkboxContainer1_1);
 
         toggleTransportation.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -176,26 +135,8 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
         });
 
         // Get references to the checkboxes
-        checkboxBus = findViewById(R.id.checkboxBus);
-        checkboxBuggy = findViewById(R.id.checkboxBuggy);
-
-        // Set up listener for the checkboxes
-        checkboxBus.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                updateSpinnersForTransportation();
-            } else {
-                updateSpinnersForTransportation(); // Revert to displaying all stops
-            }
-        });
-
-        checkboxBuggy.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                updateSpinnersForTransportation();
-            } else {
-                updateSpinnersForTransportation(); // Revert to displaying all stops
-            }
-        });
-
+        checkboxBus = view.findViewById(R.id.checkboxBus);
+        checkboxBuggy = view.findViewById(R.id.checkboxBuggy);
 
         // Supabase
         // Call methods to fetch data
@@ -203,10 +144,10 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
         fetchBuggyStopsData();
 
         // Spinners
-        spinnerDeparture = findViewById(R.id.spinnerDeparture);
-        spinnerArrival = findViewById(R.id.spinnerArrival);
-        departureAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, stopNames);
-        arrivalAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, stopNames);
+        spinnerDeparture = view.findViewById(R.id.spinnerDeparture);
+        spinnerArrival = view.findViewById(R.id.spinnerArrival);
+        departureAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, stopNames);
+        arrivalAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, stopNames);
 
         departureAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         arrivalAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -214,92 +155,63 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
         spinnerDeparture.setAdapter(departureAdapter);
         spinnerArrival.setAdapter(arrivalAdapter);
 
-        spinnerDeparture.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = parent.getItemAtPosition(position).toString();
-                //Toast.makeText(OptimizationRoute.this, "Departure Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Handle no selection if needed
-            }
-        });
-
-        spinnerArrival.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = parent.getItemAtPosition(position).toString();
-                //Toast.makeText(OptimizationRoute.this, "Arrival Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Handle no selection if needed
-            }
-        });
-
         // Set up the switchButton
-        switchButton = findViewById(R.id.switchButton);
-        switchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Get the selected items
-                String selectedDeparture = (String) spinnerDeparture.getSelectedItem();
-                String selectedArrival = (String) spinnerArrival.getSelectedItem();
+        switchButton = view.findViewById(R.id.switchButton);
+        switchButton.setOnClickListener(v -> {
+            // Get the selected items
+            String selectedDeparture = (String) spinnerDeparture.getSelectedItem();
+            String selectedArrival = (String) spinnerArrival.getSelectedItem();
 
-                // Swap selected items
-                spinnerDeparture.setSelection(arrivalAdapter.getPosition(selectedArrival));
-                spinnerArrival.setSelection(departureAdapter.getPosition(selectedDeparture));
-            }
+            // Swap selected items
+            spinnerDeparture.setSelection(arrivalAdapter.getPosition(selectedArrival));
+            spinnerArrival.setSelection(departureAdapter.getPosition(selectedDeparture));
         });
 
-        //buttonFindRoute
-        buttonFindRoute = findViewById(R.id.buttonFindRoute);
-        buttonFindRoute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Get the selected items from spinners
-                String selectedDeparture = spinnerDeparture.getSelectedItem().toString();
-                String selectedArrival = spinnerArrival.getSelectedItem().toString();
+        // Find route button
+        buttonFindRoute = view.findViewById(R.id.buttonFindRoute);
+        buttonFindRoute.setOnClickListener(v -> {
+            // Get the selected items from spinners
+            String selectedDeparture = spinnerDeparture.getSelectedItem().toString();
+            String selectedArrival = spinnerArrival.getSelectedItem().toString();
 
-                // Get the latitude and longitude for the selected departure and arrival
-                double departureLatitude = stopLatitudes.get(stopNames.indexOf(selectedDeparture));
-                double departureLongitude = stopLongitudes.get(stopNames.indexOf(selectedDeparture));
-                double arrivalLatitude = stopLatitudes.get(stopNames.indexOf(selectedArrival));
-                double arrivalLongitude = stopLongitudes.get(stopNames.indexOf(selectedArrival));
+            // Get the latitude and longitude for the selected departure and arrival
+            double departureLatitude = stopLatitudes.get(stopNames.indexOf(selectedDeparture));
+            double departureLongitude = stopLongitudes.get(stopNames.indexOf(selectedDeparture));
+            double arrivalLatitude = stopLatitudes.get(stopNames.indexOf(selectedArrival));
+            double arrivalLongitude = stopLongitudes.get(stopNames.indexOf(selectedArrival));
 
-                // Create an Intent to navigate to FindRoute activity
-                Intent intent = new Intent(OptimizationRoute.this, FindRoute.class);
+            // Create an Intent to navigate to FindRoute activity
+            Intent intent = new Intent(requireActivity(), FindRoute.class);
 
-                // Pass selected data to the next activity
-                intent.putExtra("departureName", selectedDeparture);
-                intent.putExtra("departureLatitude", departureLatitude);
-                intent.putExtra("departureLongitude", departureLongitude);
-                intent.putExtra("arrivalName", selectedArrival);
-                intent.putExtra("arrivalLatitude", arrivalLatitude);
-                intent.putExtra("arrivalLongitude", arrivalLongitude);
+            // Pass selected data to the next activity
+            intent.putExtra("departureName", selectedDeparture);
+            intent.putExtra("departureLatitude", departureLatitude);
+            intent.putExtra("departureLongitude", departureLongitude);
+            intent.putExtra("arrivalName", selectedArrival);
+            intent.putExtra("arrivalLatitude", arrivalLatitude);
+            intent.putExtra("arrivalLongitude", arrivalLongitude);
 
-                // Start the FindRoute activity
-                startActivity(intent);
-            }
+            // Start the FindRoute activity
+            startActivity(intent);
         });
+
+        // Return the view
+        return view;
     }
 
     // Google Map
     private void getLastLocation() {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_CODE);
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_CODE);
             return;
         }
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null){
-                    currentLocation = location;
-
-                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-                    mapFragment.getMapAsync(OptimizationRoute.this);
+        task.addOnSuccessListener(requireActivity(), location -> {
+            if (location != null){
+                currentLocation = location;
+                SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+                if (mapFragment != null) {
+                    mapFragment.getMapAsync(this);
                 }
             }
         });
@@ -335,7 +247,6 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
-        //mMap.getUiSettings().setScrollGesturesEnabled(true);
     }
 
     @Override
@@ -345,7 +256,7 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 getLastLocation();
             }else {
-                Toast.makeText(this, "Location permission is denied, please allow the permission.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Location permission is denied, please allow the permission.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -378,7 +289,7 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
                             double longitude = jsonObject.getDouble("longitude");
                             addUniqueStop(stopName, latitude, longitude);
                         }
-                        runOnUiThread(new Runnable() {
+                        requireActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 departureAdapter.notifyDataSetChanged();
@@ -424,7 +335,7 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
                         }
                         // Log the fetched data
                         Log.d("Supabase", "Stop Name: " + stopNames + ", Latitude: " + stopLatitudes + ", Longitude: " + stopLongitudes);
-                        runOnUiThread(new Runnable() {
+                        requireActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 departureAdapter.notifyDataSetChanged();

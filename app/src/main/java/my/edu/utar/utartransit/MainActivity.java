@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 //floatingActionButton.set
             } else if (item.getItemId() == R.id.search_btn) {
                 Log.i("Debug","here is btn clicked");
-                replaceFragment(new SearchFragment());
+                replaceFragment(new OptimizationRoute());
             } else if (item.getItemId() == R.id.favourite_btn) {
                 Log.i("Debug","here is btn clicked");
 
