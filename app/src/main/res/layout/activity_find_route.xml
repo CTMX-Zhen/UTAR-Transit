@@ -88,19 +88,19 @@
                     android:id="@+id/arrival"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/departure"
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
                     android:layout_marginStart="13dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="16dp"
                     android:text="Arrival: " />
 
                 <TextView
                     android:id="@+id/arrivalStopName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+                    android:layout_below="@+id/departureStopName"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="16dp"
                     android:layout_toEndOf="@+id/arrival"
                     android:text="stopName" />
 
@@ -108,10 +108,10 @@
                     android:id="@+id/distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+                    android:layout_below="@+id/time"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="56dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="13dp"
                     android:text="distance" />
 
@@ -119,10 +119,10 @@
                     android:id="@+id/availableTransport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/arrival"
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
                     android:layout_marginStart="13dp"
-                    android:layout_marginTop="85dp"
+                    android:layout_marginTop="16dp"
                     android:text="Available transport: " />
             </RelativeLayout>
         </LinearLayout>
@@ -220,6 +220,7 @@
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -229,55 +230,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/routeNametv"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="13dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Route: " />
 
-                    <TextView
-                        android:id="@+id/routeNametv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="13dp"
-                        android:layout_marginTop="15dp"
-                        android:text="Route: " />
-
-                    <TextView
-                        android:id="@+id/estimateTimetv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginStart="56dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="13dp"
-                        android:text="xx min left"/>
+                <TextView
+                    android:id="@+id/estimateTimetv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="13dp"
+                    android:text="xx min left" />
 
 
-                    <TextView
-                        android:id="@+id/stoptv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="13dp"
-                        android:layout_marginTop="50dp"
-                        android:text="Stop Name: " />
+                <TextView
+                    android:id="@+id/stoptv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/routeNametv"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="13dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Stop Name: " />
 
-                    <TextView
-                        android:id="@+id/timeAtStoptv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginStart="56dp"
-                        android:layout_marginTop="50dp"
-                        android:layout_marginEnd="13dp"
-                        android:text="Time arrive at stop: " />
+                <TextView
+                    android:id="@+id/timeAtStoptv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/routeNametv"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="13dp"
+                    android:text="Time arrive at stop: " />
 
-                </androidx.recyclerview.widget.RecyclerView>
             </RelativeLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

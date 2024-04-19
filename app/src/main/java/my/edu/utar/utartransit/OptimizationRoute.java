@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -77,10 +78,12 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
     // Filtter by
     private ToggleButton toggleFilterBy;
     private ToggleButton toggleTransportation;
-    private ToggleButton toggleOptimization;
     private LinearLayout checkboxContainer1;
     private LinearLayout checkboxContainer1_1;
-    private LinearLayout checkboxContainer1_2;
+
+    // checkbox
+    private CheckBox checkboxBus;
+    private CheckBox checkboxBuggy;
 
     // Supabase
     private static final String SUPABASE_URL = "https://slyrebgznitqrqnzoquz.supabase.co";
@@ -165,17 +168,27 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
             }
         });
 
-        // optimization
-        toggleOptimization = findViewById(R.id.toggleOptimization);
-        checkboxContainer1_2 = findViewById(R.id.checkboxContainer1_2);
+        // Get references to the checkboxes
+        checkboxBus = findViewById(R.id.checkboxBus);
+        checkboxBuggy = findViewById(R.id.checkboxBuggy);
 
-        toggleOptimization.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        // Set up listener for the checkboxes
+        checkboxBus.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                checkboxContainer1_2.setVisibility(View.VISIBLE);
+                updateSpinnersForTransportation();
             } else {
-                checkboxContainer1_2.setVisibility(View.GONE);
+                updateSpinnersForTransportation(); // Revert to displaying all stops
             }
         });
+
+        checkboxBuggy.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                updateSpinnersForTransportation();
+            } else {
+                updateSpinnersForTransportation(); // Revert to displaying all stops
+            }
+        });
+
 
         // Supabase
         // Call methods to fetch data
@@ -432,5 +445,30 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
         if (!stopLongitudes.contains(longitude)) {
             stopLongitudes.add(longitude);
         }
+    }
+
+    private void updateSpinnersForTransportation() {
+        // Clear existing lists
+        stopNames.clear();
+        stopLatitudes.clear();
+        stopLongitudes.clear();
+
+        // Fetch data based on selected checkboxes
+        if (checkboxBus.isChecked()) {
+            fetchBusStopsData();
+        }
+        if (checkboxBuggy.isChecked()) {
+            fetchBuggyStopsData();
+        }
+
+        // If both checkboxes are unchecked, fetch all stops
+        if (!checkboxBus.isChecked() && !checkboxBuggy.isChecked()) {
+            fetchBusStopsData();
+            fetchBuggyStopsData();
+        }
+
+        // Update adapters for spinners
+        departureAdapter.notifyDataSetChanged();
+        arrivalAdapter.notifyDataSetChanged();
     }
 }
