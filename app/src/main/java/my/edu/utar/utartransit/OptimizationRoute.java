@@ -106,11 +106,64 @@ public class OptimizationRoute extends Fragment implements OnMapReadyCallback {
         // Google Map
         mapSearchView = view.findViewById(R.id.mapSearch);
         mapSearchView.setQueryHint("Search...");
+        mapSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String location = mapSearchView.getQuery().toString();
+                if (location != null && !location.isEmpty()) {
+                    Geocoder geocoder = new Geocoder(requireContext());
+                    try {
+                        List<Address> addressList = geocoder.getFromLocationName(location, 1);
+                        if (!addressList.isEmpty()) {
+                            Address address = addressList.get(0);
+                            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                            // Create a custom marker icon for searched locations (Blue color)
+                            BitmapDescriptor searchedLocationIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
+                            if (mMap != null) {
+                                mMap.addMarker(new MarkerOptions().position(latLng).title(location).icon(searchedLocationIcon));
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+                            }
+                        } else {
+                            Toast.makeText(requireContext(), "Location not found", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (IOException e) {
+                        Log.e("SearchView", "Geocoding error: " + e.getMessage());
+                        Toast.makeText(requireContext(), "Error finding location", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         // Initialize fusedLocationProviderClient
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext());
+        getLastLocation();
 
         // Filtter by
+        TextView filterByLabel = view.findViewById(R.id.filterByLabel);
+        TextView transportationLabel = view.findViewById(R.id.transportationLabel);
+
+        filterByLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the state of toggleFilterBy
+                toggleFilterBy.setChecked(!toggleFilterBy.isChecked());
+            }
+        });
+
+        transportationLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the state of toggleTransportation
+                toggleTransportation.setChecked(!toggleTransportation.isChecked());
+            }
+        });
+
         toggleFilterBy = view.findViewById(R.id.toggleFilterBy);
         checkboxContainer1 = view.findViewById(R.id.checkboxContainer1);
 
@@ -122,7 +175,7 @@ public class OptimizationRoute extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        // Transportation
+        // transportation
         toggleTransportation = view.findViewById(R.id.toggleTransportation);
         checkboxContainer1_1 = view.findViewById(R.id.checkboxContainer1_1);
 
@@ -137,6 +190,23 @@ public class OptimizationRoute extends Fragment implements OnMapReadyCallback {
         // Get references to the checkboxes
         checkboxBus = view.findViewById(R.id.checkboxBus);
         checkboxBuggy = view.findViewById(R.id.checkboxBuggy);
+
+        // Set up listener for the checkboxes
+        checkboxBus.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                updateSpinnersForTransportation();
+            } else {
+                updateSpinnersForTransportation(); // Revert to displaying all stops
+            }
+        });
+
+        checkboxBuggy.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                updateSpinnersForTransportation();
+            } else {
+                updateSpinnersForTransportation(); // Revert to displaying all stops
+            }
+        });
 
         // Supabase
         // Call methods to fetch data
@@ -154,6 +224,30 @@ public class OptimizationRoute extends Fragment implements OnMapReadyCallback {
 
         spinnerDeparture.setAdapter(departureAdapter);
         spinnerArrival.setAdapter(arrivalAdapter);
+
+        spinnerDeparture.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                //Toast.makeText(OptimizationRoute.this, "Departure Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle no selection if needed
+            }
+        });
+
+        spinnerArrival.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                //Toast.makeText(OptimizationRoute.this, "Arrival Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle no selection if needed
+            }
+        });
 
         // Set up the switchButton
         switchButton = view.findViewById(R.id.switchButton);
@@ -229,20 +323,6 @@ public class OptimizationRoute extends Fragment implements OnMapReadyCallback {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
         }
 
-        // Loop to add marker for the list of stops
-        for (int i = 0; i < stopNames.size(); i++){
-            String stopName = stopNames.get(i);
-            double latitude = stopLatitudes.get(i);
-            double longitude = stopLongitudes.get(i);
-
-            // create LatLng object for the stop location
-            LatLng stopLatLng = new LatLng(latitude, longitude);
-
-            // Create a green marker icon for stops
-            BitmapDescriptor stopIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
-            mMap.addMarker(new MarkerOptions().position(stopLatLng).title(stopName).icon(stopIcon));
-        }
-
         // UI settings
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
@@ -258,6 +338,22 @@ public class OptimizationRoute extends Fragment implements OnMapReadyCallback {
             }else {
                 Toast.makeText(requireContext(), "Location permission is denied, please allow the permission.", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void addMarkersToMap() {
+        // Loop to add marker for the list of stops
+        for (int i = 0; i < stopNames.size(); i++){
+            String stopName = stopNames.get(i);
+            double latitude = stopLatitudes.get(i);
+            double longitude = stopLongitudes.get(i);
+
+            // create LatLng object for the stop location
+            LatLng stopLatLng = new LatLng(latitude, longitude);
+
+            // Create a green marker icon for stops
+            BitmapDescriptor stopIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+            mMap.addMarker(new MarkerOptions().position(stopLatLng).title(stopName).icon(stopIcon));
         }
     }
 
@@ -340,6 +436,7 @@ public class OptimizationRoute extends Fragment implements OnMapReadyCallback {
                             public void run() {
                                 departureAdapter.notifyDataSetChanged();
                                 arrivalAdapter.notifyDataSetChanged();
+                                addMarkersToMap();
                             }
                         });
                     } catch (JSONException e) {
