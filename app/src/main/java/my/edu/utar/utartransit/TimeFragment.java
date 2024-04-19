@@ -30,7 +30,7 @@ public class TimeFragment extends Fragment {
         VPAdapter vpAdapter = new VPAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         vpAdapter.addFragment(new TimetableFragment(),"Bus Timetable");
         vpAdapter.addFragment(new BuggyTimetableFragment(), "Buggy Timetable");
-        vpAdapter.addFragment(new AnnouncementFragment(), "Announce");
+        //vpAdapter.addFragment(new AnnouncementFragment(), "Announce");
         viewPager.setAdapter(vpAdapter);
 
         tabLayout.setupWithViewPager(viewPager);

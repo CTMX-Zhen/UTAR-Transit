@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.time_btn) {
                 replaceFragment(new TimeFragment());
             } else if (item.getItemId() == R.id.notification_btn) {
-                //replaceFragment(new ());
+                replaceFragment(new AnnouncementFragment());
             }
 
             return true;
