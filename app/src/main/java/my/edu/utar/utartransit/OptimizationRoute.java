@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -32,33 +33,19 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -145,6 +132,26 @@ public class OptimizationRoute extends AppCompatActivity implements OnMapReadyCa
         getLastLocation();
 
         // Filtter by
+        // Get references to the TextViews
+        TextView filterByLabel = findViewById(R.id.filterByLabel);
+        TextView transportationLabel = findViewById(R.id.transportationLabel);
+
+        filterByLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the state of toggleFilterBy
+                toggleFilterBy.setChecked(!toggleFilterBy.isChecked());
+            }
+        });
+
+        transportationLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the state of toggleTransportation
+                toggleTransportation.setChecked(!toggleTransportation.isChecked());
+            }
+        });
+
         toggleFilterBy = findViewById(R.id.toggleFilterBy);
         checkboxContainer1 = findViewById(R.id.checkboxContainer1);
 
