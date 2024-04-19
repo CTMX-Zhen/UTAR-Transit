@@ -36,11 +36,12 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="match_parent"
+                    android:id="@+id/imageView1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/standford_ck_mahsuri" />
+                    android:src="@drawable/stanford_ck_mahsuri_n" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,11 +85,12 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="match_parent"
+                    android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/mahsuri" />
+                    android:src="@drawable/mahsuri1" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -120,7 +122,7 @@
             app:cardElevation="8dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
@@ -128,11 +130,12 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="match_parent"
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/havard_cambridge" />
+                    android:src="@drawable/havard_cambridge_n" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -172,11 +175,13 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="match_parent"
+                    android:id="@+id/imageView4"
+
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/havard_cambridge_westlake" />
+                    android:src="@drawable/havard_cambridge1" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -216,11 +221,12 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="match_parent"
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/westlake_all" />
+                    android:src="@drawable/westlake_all1" />
 
                 <TextView
                     android:layout_width="wrap_content"

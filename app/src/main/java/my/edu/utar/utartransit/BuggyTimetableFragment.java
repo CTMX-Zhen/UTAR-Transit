@@ -73,13 +73,20 @@ public class BuggyTimetableFragment extends Fragment {
     private void recordTimetableAsChecked(String timetable, boolean checked, int imageId) {
         // Store the checked timetable in SharedPreferences or SQLite database
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("CheckedTimetables", Context.MODE_PRIVATE);
+        SharedPreferences sharedTimetable = getActivity().getSharedPreferences("TimetableName", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editName = sharedTimetable.edit();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (checked) {
             editor.putInt(timetable, imageId);
+            editName.putString(timetable, "E-buggy");
         } else {
             editor.putInt(timetable, 0);
+            editName.putString(timetable, "E-buggy");
+
         }
 
+        editName.apply();
         editor.apply();
     }
 

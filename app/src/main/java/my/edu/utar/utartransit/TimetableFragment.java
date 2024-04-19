@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.GridLayout;
 
@@ -28,7 +30,20 @@ public class TimetableFragment extends Fragment {
 
         //res.getIdentifier("standford_ck_mahsuri","drawable",getContext().getPackageName());
         View view = binding.getRoot();
+        binding.imageView1.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.stanford_ck_mahsuri_n, 100, 100));
+
+        binding.imageView2.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.mahsuri1, 100, 100));
+        binding.imageView3.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.havard_cambridge_n, 100, 100));
+        binding.imageView4.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.havard_cambridge1, 100, 100));
+        binding.imageView5.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.westlake_all1, 100, 100));
         checkFavourite();
+
+
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,21 +122,21 @@ public class TimetableFragment extends Fragment {
                 int imageResId = 0;
                 if(v.getId()==R.id.card_view1) {
 
-                    imageResId = R.drawable.standford_ck_mahsuri;
+                    imageResId = R.drawable.stanford_ck_mahsuri_n;
                 }
                 if(v.getId()==R.id.card_view2){
-                    imageResId = R.drawable.mahsuri;
+                    imageResId = R.drawable.mahsuri1;
                 }
                 if(v.getId()==R.id.card_view3) {
 
-                    imageResId = R.drawable.havard_cambridge;
+                    imageResId = R.drawable.havard_cambridge_n;
                 }
                 if(v.getId()==R.id.card_view4){
-                    imageResId = R.drawable.havard_cambridge_westlake;
+                    imageResId = R.drawable.havard_cambridge1;
                 }
                 if(v.getId()==R.id.card_view5) {
 
-                    imageResId = R.drawable.westlake_all;
+                    imageResId = R.drawable.westlake_all1;
                 }
 
                 if ( imageResId != 0) {
@@ -193,5 +208,42 @@ public class TimetableFragment extends Fragment {
         Intent intent = new Intent(requireContext(), FullScreenImageActivity.class);
         intent.putExtra("imageResId", imageResId);
         startActivity(intent);
+    }
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 }
