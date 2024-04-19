@@ -172,67 +172,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Bus" />
-
-                            <CheckBox
-                                android:id="@+id/checkboEscooter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="E-scooter" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                    <!-- Transportation troggle End-->
-
-                    <!-- Optimization troggle Start-->
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        tools:context=".OptimizeRoute">
-
-                        <TextView
-                            android:id="@+id/optimizationLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:text="Optimization"
-                            android:textStyle="bold" />
-
-                        <ToggleButton
-                            android:id="@+id/toggleOptimization"
-                            android:layout_width="32dp"
-                            android:layout_height="19dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="216dp"
-                            android:layout_toEndOf="@+id/optimizationLabel"
-                            android:background="@drawable/toggle_selector"
-                            android:checked="false"
-                            android:textOff=""
-                            android:textOn="" />
-
-                        <LinearLayout
-                            android:id="@+id/checkboxContainer1_2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/toggleOptimization"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <CheckBox
-                                android:id="@+id/checkboxNearby"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Nearby" />
-
-                            <CheckBox
-                                android:id="@+id/checkboxShortest"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Shortest" />
                         </LinearLayout>
                     </RelativeLayout>
                     <!-- Transportation troggle End-->
