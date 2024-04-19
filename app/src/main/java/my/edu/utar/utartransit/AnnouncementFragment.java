@@ -10,33 +10,56 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import my.edu.utar.utartransit.databinding.FragmentAnnouncementBinding;
+import my.edu.utar.utartransit.databinding.FragmentTimetableBinding;
+
 
 public class AnnouncementFragment extends Fragment {
+
+    private FragmentAnnouncementBinding binding;
+    private JSONArray jsonArray;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        binding = FragmentAnnouncementBinding.inflate(inflater, container, false);
+
+        TextView tv = new TextView(requireContext());
+
+        MyThread connectThread = new MyThread();
+        connectThread.start();
+
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_announcement, container, false);
     }
 
     private class MyThread extends Thread {
-        private String name;
-        private Handler mHandler;
-
-        public MyThread(String name, Handler handler) {
-            this.name = name;
-            mHandler = handler;
-        }
+//        private String name;
+//        private Handler mHandler;
+//
+//        public MyThread(String name, Handler handler) {
+//            this.name = name;
+//            mHandler = handler;
+//        }
 
         public void run() {
             try {
-                URL url = new URL("https://slyrebgznitqrqnzoquz.supabase.co/rest/v1/bus_route?route_id=eq." + name);
+                URL url = new URL("https://slyrebgznitqrqnzoquz.supabase.co/rest/v1/bus_announcement?select=*");
 
                 Log.i("Net", url.toString());
 
@@ -46,23 +69,22 @@ public class AnnouncementFragment extends Fragment {
                 hc.setRequestProperty("apikey", getString(R.string.SUPABASE_KEY));
                 hc.setRequestProperty("Authorization", "Bearer " + getString(R.string.SUPABASE_KEY));
 
-                //Q4 To set request method and some additional properties
-//                hc.setRequestMethod("POST");
-//                hc.setRequestProperty("Content-Type", "application/json");
-//                hc.setRequestProperty("Prefer", "return=minimal");
-
-                //For HTTP POST
-//                hc.setDoOutput(true);
-//                OutputStream output = hc.getOutputStream();
-//                output.write(jsonObject.toString().getBytes());
-//                output.flush();
 
                 InputStream input = hc.getInputStream();
 
+                String result = readStream(input);
 
                 if (hc.getResponseCode() == 200) {
                     //OK
-
+                    //JSONArray
+                    jsonArray = new JSONArray(result);
+                    Log.i("MainActivity2", "JSON Array Contents:");
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateUI();
+                        }
+                    });
 
                     //Q4
                 } else if (hc.getResponseCode() == 201) {
@@ -73,12 +95,44 @@ public class AnnouncementFragment extends Fragment {
                 }
 
                 input.close();
-                //For HTTP POST
-//                output.close();
+
             } catch (Exception e) {
                 Log.e("Net", "Error" + e.getMessage(), e);
             }
         }
     }
+
+    private void updateUI() {
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = jsonArray.getJSONObject(i);
+                    String announcementTitle = jsonObject.getString("a_title");
+                    TextView textView = new TextView(requireContext());
+                    textView.setText(announcementTitle);
+                    binding.recycleView.addView(textView);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                Log.i("MainActivity2", "Element " + i + ": " + jsonObject.toString());
+            }
+        }
+    }
+    private String readStream(InputStream is) {
+        try {
+            ByteArrayOutputStream bo = new
+                    ByteArrayOutputStream();
+            int i = is.read();
+            while (i != -1) {
+                bo.write(i);
+                i = is.read();
+            }
+            return bo.toString();
+        } catch (IOException e) {
+            return "";
+        }
+    }
+
 
 }
