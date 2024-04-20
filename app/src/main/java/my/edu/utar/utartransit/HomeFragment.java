@@ -31,12 +31,48 @@ public class HomeFragment extends Fragment {
         initRecycleView();
 
         // Find the CardView
+        CardView buggyCardView = view.findViewById(R.id.buggy_cv);
         CardView busCardView = view.findViewById(R.id.bus_cv);
         // ... rest of your code
         CardView ScooterCardView = view.findViewById(R.id.escooter_cv);
 
 
         //When
+        /*
+        buggyCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to launch BeamPage activity
+                Intent intent = new Intent(getActivity(), FindRoute.class);
+                intent.putExtra("buggy", 1);
+                startActivity(intent);
+            }
+        });
+        //fragment transaction
+
+        busCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                OptimizationRoute optimizationRoute = new OptimizationRoute();
+                transaction.replace(R.id.frag_home, optimizationRoute); // Replace with your container ID
+                transaction.commit();
+            }
+        });
+
+        busCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to launch BeamPage activity
+                Intent intent = new Intent(getActivity(), FindRoute.class);
+                intent.putExtra("bus",1);
+                startActivity(intent);
+            }
+        });
+        */
+
         ScooterCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
