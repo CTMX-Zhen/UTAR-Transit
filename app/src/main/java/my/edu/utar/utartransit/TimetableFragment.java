@@ -58,7 +58,7 @@ public class TimetableFragment extends Fragment {
                         //update database
                         check = false;
                     }
-                    recordTimetableAsChecked("Timetable 1",check, R.drawable.standford_ck_mahsuri,"standford_ck_mahsuri"); // Record timetable as checked
+                    recordTimetableAsChecked("Timetable 1",check, R.drawable.stanford_ck_mahsuri_n,"standford_ck_mahsuri"); // Record timetable as checked
 
                 } else if (v.getId() == R.id.checkBox2) {
                     Log.i("Debug","The check2 clicked");
@@ -72,7 +72,7 @@ public class TimetableFragment extends Fragment {
 //                        check=true;
 //                    }
 
-                    recordTimetableAsChecked("Timetable 2",check,R.drawable.mahsuri,"mahsuri");
+                    recordTimetableAsChecked("Timetable 2",check,R.drawable.mahsuri1,"mahsuri");
                 } else if (v.getId() == R.id.checkBox3) {
                     Log.i("Debug","The check3 clicked");
 
@@ -111,7 +111,7 @@ public class TimetableFragment extends Fragment {
 //                        check=true;
 //                    }
 
-                    recordTimetableAsChecked("Timetable 5",check,R.drawable.westlake_all,"westlake_all");
+                    recordTimetableAsChecked("Timetable 5",check,R.drawable.westlake_all1,"westlake_all");
                 }
             }
         };

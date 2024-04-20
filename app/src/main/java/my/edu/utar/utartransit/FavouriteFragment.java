@@ -1,6 +1,7 @@
 package my.edu.utar.utartransit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -31,6 +32,74 @@ public class FavouriteFragment extends Fragment {
         // Inflate the layout for this fragment
 
         checkFavourite();
+
+        View.OnClickListener cardClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Launch full-screen view with the clicked image
+                int imageResId = 0;
+                String imageName = null;
+
+                // Determine the image resource ID based on the clicked CardView
+                if (v.getId() == R.id.card_view1) {
+                    imageName = binding.textView1.getText().toString();
+                } else if (v.getId() == R.id.card_view2) {
+                    imageName = binding.textView2.getText().toString();
+                } else if (v.getId() == R.id.card_view3) {
+                    imageName = binding.textView3.getText().toString();
+                } else if (v.getId() == R.id.card_view4) {
+                    imageName = binding.textView4.getText().toString();
+                } else if (v.getId() == R.id.card_view5) {
+                    imageName = binding.textView5.getText().toString();
+                } else if (v.getId() == R.id.card_view6) {
+                    imageName = binding.textView6.getText().toString();
+                }
+
+                // Set imageResId based on the imageName
+                if (imageName != null) {
+                    switch (imageName) {
+                        case "standford_ck_mahsuri":
+                            imageResId = R.drawable.stanford_ck_mahsuri_n;
+                            break;
+                        case "mahsuri":
+                            imageResId = R.drawable.mahsuri1;
+                            break;
+                        case "havard_cambridge":
+                            imageResId = R.drawable.havard_cambridge_n;
+                            break;
+                        case "havard_cambridge_westlake":
+                            imageResId = R.drawable.havard_cambridge1;
+                            break;
+                        case "westlake_all":
+                            imageResId = R.drawable.westlake_all1;
+                            break;
+                        case "E-buggy":
+                            imageResId = R.drawable.e_buggy;
+                            break;
+                        default:
+                            // Handle the case where imageName does not match any expected value
+                            // You can log an error or show a default image in this case
+                            break;
+                    }
+                }
+
+                // Check if a valid imageResId was set and launch full-screen image activity
+                if (imageResId != 0) {
+                    showFullScreenImage(imageResId);
+                }
+            }
+        };
+
+        binding.cardView1.setOnClickListener(cardClickListener);
+        binding.cardView2.setOnClickListener(cardClickListener);
+        binding.cardView3.setOnClickListener(cardClickListener);
+        binding.cardView4.setOnClickListener(cardClickListener);
+        binding.cardView5.setOnClickListener(cardClickListener);
+        binding.cardView6.setOnClickListener(cardClickListener);
+
+        //binding.announcementGridView.setOnClickListener(onClickListener);
+
+        // Inflate the layout for this fragment
         return view;
     }
 
@@ -131,5 +200,9 @@ public class FavouriteFragment extends Fragment {
             }
         }
     }
-
+    private void showFullScreenImage(int imageResId) {
+        Intent intent = new Intent(requireContext(), FullScreenImageActivity.class);
+        intent.putExtra("imageResId", imageResId);
+        startActivity(intent);
+    }
 }
