@@ -89,7 +89,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="265dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -111,9 +111,10 @@
                         android:id="@+id/RV_build1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
                         android:clipToPadding="false"
-                        android:paddingStart="8dp"
 
+                        android:paddingStart="8dp"
                         android:paddingEnd="8dp" />
 
 
@@ -127,16 +128,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:text="Transport　options"
+                android:text="Transport options"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:layout_marginTop="15dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/buggy_cv"
@@ -176,7 +179,7 @@
                             android:layout_height="wrap_content"
                             android:text="Buggy"
                             android:textAlignment="center"
-                            android:textColor="#673AB7"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -220,7 +223,7 @@
                             android:layout_height="wrap_content"
                             android:text="Bus"
                             android:textAlignment="center"
-                            android:textColor="#673AB7"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -264,7 +267,7 @@
                             android:layout_height="wrap_content"
                             android:text="E-Scooter"
                             android:textAlignment="center"
-                            android:textColor="#673AB7"
+                            android:textColor="@color/black"
                             android:textStyle="bold" />
 
                     </LinearLayout>
