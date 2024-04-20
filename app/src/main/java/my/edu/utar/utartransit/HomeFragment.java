@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +23,8 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView.Adapter adapterBuilding;
     private RecyclerView recyclerViewBuilding;
+    private FragmentManager fragmentManager; // Get this from the hosting activity
+    private ImageView myImageView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,7 +43,18 @@ public class HomeFragment extends Fragment {
         // ... rest of your code
 
 
+        myImageView = view.findViewById(R.id.announce_icon);
 
+        fragmentManager = getActivity().getSupportFragmentManager(); // Get FragmentManager
+
+        myImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.frag_home, new AnnouncementFragment()); // Replace with your container and target fragment
+                transaction.commit();
+            }
+        });
         //When
 
 

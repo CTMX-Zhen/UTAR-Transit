@@ -50,7 +50,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/imageView7"
+                        android:id="@+id/announce_icon"
                         android:layout_width="40dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="20dp"
@@ -78,14 +78,24 @@
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_bar"
-                android:layout_width="168dp"
-                android:layout_height="53dp"
-                android:iconifiedByDefault="false"
-                android:queryHint="Search...">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/material_dynamic_neutral70">
 
-            </androidx.appcompat.widget.SearchView>
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="420dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="31dp"
+                    android:max="10"
+                    android:progress="7"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -101,6 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:fontFamily="sans-serif-black"
                         android:text="Buildings in UTAR :"
                         android:textColor="@color/black"
