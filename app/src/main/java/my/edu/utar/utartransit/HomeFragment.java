@@ -1,5 +1,6 @@
 package my.edu.utar.utartransit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,14 +32,15 @@ public class HomeFragment extends Fragment {
 
         // Find the CardView
         CardView busCardView = view.findViewById(R.id.bus_cv);
+
+
+        CardView scooterCardView = view.findViewById(R.id.escooter_cv);
         // ... rest of your code
 
 
 
         //When
 
-        // Inflate the layout for this fragment
-        return view;//inflater.inflate(R.layout.fragment_home, container, false);
 
 
         /*busCardView.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +51,18 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
          */
+        scooterCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to launch BeamPage activity
+                Intent intent = new Intent(getActivity(), BeamPage.class);
+                startActivity(intent);
+            }
+        });
+        // Inflate the layout for this fragment
+        return view;//inflater.inflate(R.layout.fragment_home, container, false);
+
     }
 
     private void initRecycleView(){

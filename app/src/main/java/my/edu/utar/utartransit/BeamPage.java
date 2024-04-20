@@ -1,9 +1,5 @@
 package my.edu.utar.utartransit;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,10 +10,14 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -32,19 +32,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class BeamPage extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -57,6 +45,9 @@ public class BeamPage extends AppCompatActivity implements OnMapReadyCallback {
     private ArrayList<String> locationNames = new ArrayList<>();
     private ArrayList<Double> stopLatitudes = new ArrayList<>();
     private ArrayList<Double> stopLongitudes = new ArrayList<>();
+
+    // Back Button
+    private Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +90,15 @@ public class BeamPage extends AppCompatActivity implements OnMapReadyCallback {
         // Set the text in the TextView
         textView.setText(spannableString);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        back = (Button) findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BeamPage.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     // add data
