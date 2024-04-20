@@ -34,9 +34,24 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="10dp"
-                    android:text="You can found the Beam e-scooter based on the below map!"
+                    android:text="You can found the Beam e-scooter \nbased on the below map!"
                     android:textAlignment="textStart"
                     android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/back"
+                    android:layout_width="74dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="9dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/checkbox_background"
+                    android:text="Back"
+                    app:layout_constraintEnd_toStartOf="@+id/t1"
+                    app:layout_constraintTop_toTopOf="parent" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -94,16 +109,6 @@
             </RelativeLayout>
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/back"
-            android:layout_width="82dp"
-            android:layout_height="34dp"
-            android:layout_marginEnd="25dp"
-            android:background="@drawable/checkbox_background"
-            android:text="Back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
