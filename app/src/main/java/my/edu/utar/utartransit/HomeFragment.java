@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import my.edu.utar.utartransit.Adapters.BuildingsAdapter;
 import my.edu.utar.utartransit.Domains.itemBuildings;
@@ -36,6 +38,7 @@ public class HomeFragment extends Fragment {
         initRecycleView();
 
         // Find the CardView
+        CardView buggyCardView = view.findViewById(R.id.buggy_cv);
         CardView busCardView = view.findViewById(R.id.bus_cv);
 
 
@@ -58,19 +61,50 @@ public class HomeFragment extends Fragment {
         //When
 
 
-
-        /*busCardView.setOnClickListener(new View.OnClickListener() {
+        buggyCardView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Create an Intent to launch BeamPage activity
-                Intent intent = new Intent(getActivity(), BeamPage.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                Random random = new Random();
+                int randomNumber = random.nextInt(10);
+                String message;
+                if (randomNumber %3 == 0) {
+                    message = "Embrace The Wind!";
+                } else if (randomNumber %3 == 1) {
+                    message = "Free of Charge!";
+                } else {
+                    message = "Limited Seat";
+                }
+
+                // Create and display Toast message
+                Toast toast = Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
-         */
+        busCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Random random = new Random();
+                int randomNumber = random.nextInt(10);
+                String message;
+                if (randomNumber % 3 == 0) {
+                    message = "Monthly Pass Only RM32 (Original RM35)";
+                } else if (randomNumber % 3 == 1) { // Adjust range for 30% chance of "RM1/Trip"
+                    message = "RM1/Trip";
+                } else {
+                    message = "Find All The Available Route Here!";
+                }
+
+                // Create and display Toast message
+                Toast toast = Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
         scooterCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
                 // Create an Intent to launch BeamPage activity
                 Intent intent = new Intent(getActivity(), BeamPage.class);
                 startActivity(intent);
@@ -83,7 +117,7 @@ public class HomeFragment extends Fragment {
 
     private void initRecycleView(){
         ArrayList<itemBuildings> items = new ArrayList<>();
-        items.add(new itemBuildings("Block M", "", "blockm"));
+
         items.add(new itemBuildings("Block N", "", "blockn"));
         items.add(new itemBuildings("Block L", "", "blockl"));
         items.add(new itemBuildings("Block A", "", "blocka"));
@@ -96,6 +130,7 @@ public class HomeFragment extends Fragment {
         items.add(new itemBuildings("Block I", "", "blocki"));
         items.add(new itemBuildings("Block J", "", "blockj"));
         items.add(new itemBuildings("Block K", "", "blockk"));
+        items.add(new itemBuildings("Block M", "", "blockm"));
 
 
         recyclerViewBuilding.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
