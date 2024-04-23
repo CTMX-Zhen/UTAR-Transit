@@ -61,8 +61,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.2" />
-
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
@@ -86,10 +84,9 @@
                 <SeekBar
                     android:id="@+id/seekBar"
                     style="@style/Widget.AppCompat.SeekBar.Discrete"
-                    android:layout_width="420dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
-                    android:layout_marginEnd="31dp"
                     android:max="10"
                     android:progress="7"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -124,11 +121,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="15dp"
                         android:clipToPadding="false"
-
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp" />
-
-
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -146,8 +140,9 @@
                 tools:layout_marginTop="15dp" />
 
             <LinearLayout
+                android:id="@+id/c01"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -183,7 +178,6 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"/>
 
-
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
@@ -194,7 +188,6 @@
                             android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
-
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -229,7 +222,6 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
@@ -240,7 +232,6 @@
                             android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
-
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -275,7 +266,6 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
@@ -286,17 +276,39 @@
                             android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
-
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/c02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/image01"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:src="@drawable/utarbus" />
+
+                    <ImageView
+                        android:id="@+id/image02"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/utarbuggy" />
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
-
-
-
-
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

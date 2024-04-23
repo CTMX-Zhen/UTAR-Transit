@@ -46,9 +46,6 @@ public class BeamPage extends AppCompatActivity implements OnMapReadyCallback {
     private ArrayList<Double> stopLatitudes = new ArrayList<>();
     private ArrayList<Double> stopLongitudes = new ArrayList<>();
 
-    // Back Button
-    private Button back;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,15 +87,6 @@ public class BeamPage extends AppCompatActivity implements OnMapReadyCallback {
         // Set the text in the TextView
         textView.setText(spannableString);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
-
-        back = (Button) findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BeamPage.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     // add data

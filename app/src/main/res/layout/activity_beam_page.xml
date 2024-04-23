@@ -38,20 +38,6 @@
                     android:textAlignment="textStart"
                     android:textSize="20sp" />
 
-                <Button
-                    android:id="@+id/back"
-                    android:layout_width="74dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="9dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="0dp"
-                    android:background="@drawable/checkbox_background"
-                    android:text="Back"
-                    app:layout_constraintEnd_toStartOf="@+id/t1"
-                    app:layout_constraintTop_toTopOf="parent" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -59,7 +45,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
+            android:layout_height="700dp"
             android:layout_marginTop="4dp"
             android:orientation="vertical"
             android:visibility="visible"

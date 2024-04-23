@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
@@ -25,15 +26,25 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView.Adapter adapterBuilding;
     private RecyclerView recyclerViewBuilding;
-    private FragmentManager fragmentManager; // Get this from the hosting activity
+    private FragmentManager fragmentManager;
     private ImageView myImageView;
+
+    LinearLayout linearLayout;
+    private ImageView busImageView;
+    private ImageView buggyImageView;
+    private boolean isBusVisible = false;
+    private boolean isBuggyVisible = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerViewBuilding=(RecyclerView) view.findViewById (R.id.RV_build1);
+
+        linearLayout = view.findViewById(R.id.c02);
+        busImageView = view.findViewById(R.id.image01);
+        buggyImageView = view.findViewById(R.id.image02);
 
         initRecycleView();
 
@@ -43,8 +54,6 @@ public class HomeFragment extends Fragment {
 
 
         CardView scooterCardView = view.findViewById(R.id.escooter_cv);
-        // ... rest of your code
-
 
         myImageView = view.findViewById(R.id.announce_icon);
 
@@ -54,7 +63,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.frag_home, new AnnouncementFragment()); // Replace with your container and target fragment
+                transaction.replace(R.id.frame_layout, new AnnouncementFragment()); // Replace with your container and target fragment
                 transaction.commit();
             }
         });
@@ -78,8 +87,16 @@ public class HomeFragment extends Fragment {
                 // Create and display Toast message
                 Toast toast = Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT);
                 toast.show();
+
+                if (isBusVisible) {
+                    // Bus is visible, hide it
+                    toggleBusImageVisibility();
+                }
+                // Toggle buggy image visibility
+                toggleBuggyImageVisibility();
             }
         });
+
         busCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,14 +114,19 @@ public class HomeFragment extends Fragment {
                 // Create and display Toast message
                 Toast toast = Toast.makeText(view.getContext(), message, Toast.LENGTH_SHORT);
                 toast.show();
+
+                if (isBuggyVisible) {
+                    // Buggy is visible, hide it
+                    toggleBuggyImageVisibility();
+                }
+                // Toggle bus image visibility
+                toggleBusImageVisibility();
             }
         });
+
         scooterCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
                 // Create an Intent to launch BeamPage activity
                 Intent intent = new Intent(getActivity(), BeamPage.class);
                 startActivity(intent);
@@ -136,7 +158,29 @@ public class HomeFragment extends Fragment {
         recyclerViewBuilding.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         adapterBuilding=new BuildingsAdapter(items);
         recyclerViewBuilding.setAdapter(adapterBuilding);
+    }
 
+    private void toggleBusImageVisibility() {
+        isBusVisible = !isBusVisible;
+        if (isBusVisible) {
+            busImageView.setVisibility(View.VISIBLE);
+            buggyImageView.setVisibility(View.GONE);
+            linearLayout.setVisibility(View.VISIBLE);
+        } else {
+            busImageView.setVisibility(View.GONE);
+            linearLayout.setVisibility(View.GONE);
+        }
+    }
 
+    private void toggleBuggyImageVisibility() {
+        isBuggyVisible = !isBuggyVisible;
+        if (isBuggyVisible) {
+            buggyImageView.setVisibility(View.VISIBLE);
+            busImageView.setVisibility(View.GONE);
+            linearLayout.setVisibility(View.VISIBLE);
+        } else {
+            buggyImageView.setVisibility(View.GONE);
+            linearLayout.setVisibility(View.GONE);
+        }
     }
 }

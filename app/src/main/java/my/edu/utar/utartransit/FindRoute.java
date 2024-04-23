@@ -380,12 +380,15 @@ public class FindRoute extends AppCompatActivity implements OnMapReadyCallback {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         String currentTime = sdf.format(calendar.getTime());
 
-        // Get departure stop name from TextView
+        // Get departure and arrival stop names from TextViews
         TextView departureStopTextView = findViewById(R.id.departureStopName);
-        String departureStopName = departureStopTextView.getText().toString().trim();
+        TextView arrivalStopTextView = findViewById(R.id.arrivalStopName);
 
-        if (TextUtils.isEmpty(departureStopName)) {
-            return; // Departure stop name is empty
+        String departureStopName = departureStopTextView.getText().toString().trim();
+        String arrivalStopName = arrivalStopTextView.getText().toString().trim();
+
+        if (TextUtils.isEmpty(departureStopName) || TextUtils.isEmpty(arrivalStopName)) {
+            return; // Departure or arrival stop name is empty
         }
 
         // Initialize variables to track the nearest trip
@@ -394,7 +397,21 @@ public class FindRoute extends AppCompatActivity implements OnMapReadyCallback {
         String nearestTimeToStop = null;
         long minTimeDifference = Long.MAX_VALUE;
 
+        // Define allowed stops for buggy and bus
+        List<String> buggyAllowedStops = Arrays.asList("Block B", "Block D", "East Gate", "Block F (Bus Stop)", "Block K (Student Pavilion II)", "Block N");
+        List<String> busAllowedStops = Arrays.asList("Block D - G - N", "Stanford", "CK Optical Shop", "Taman Mahsuri Impian", "Harvard and Cambridge", "Westlake Homes", "Block G - N - D", "Block D", "Block N - G - D");
+
         if (transport.equals("bus")) {
+            // Check if the departure and arrival stops are valid for the bus
+            if (!busAllowedStops.contains(departureStopName) || !busAllowedStops.contains(arrivalStopName)) {
+                // Invalid stops for bus route
+                routeNameTextView.setText("No Trip Found");
+                stopNameTextView.setVisibility(View.GONE);
+                timeToStopTextView.setVisibility(View.GONE);
+                estimateTimeTextView.setVisibility(View.GONE);
+                return;
+            }
+
             // Iterate over the populated arrays to find the nearest upcoming bus trip
             for (int i = 0; i < tsIds.size(); i++) {
                 String tsId = tsIds.get(i);
@@ -415,6 +432,16 @@ public class FindRoute extends AppCompatActivity implements OnMapReadyCallback {
                 }
             }
         } else if (transport.equals("buggy")) {
+            // Check if the departure and arrival stops are valid for the buggy
+            if (!buggyAllowedStops.contains(departureStopName) || !buggyAllowedStops.contains(arrivalStopName)) {
+                // Invalid stops for buggy route
+                routeNameTextView.setText("No Trip Found");
+                stopNameTextView.setVisibility(View.GONE);
+                timeToStopTextView.setVisibility(View.GONE);
+                estimateTimeTextView.setVisibility(View.GONE);
+                return;
+            }
+
             // Iterate over the populated arrays to find the nearest upcoming buggy trip
             for (int i = 0; i < tsIds1.size(); i++) {
                 String tsId1 = tsIds1.get(i);
@@ -442,12 +469,12 @@ public class FindRoute extends AppCompatActivity implements OnMapReadyCallback {
             routeNameTextView.setText(nearestRouteName);
 
             stopNameTextView.setVisibility(View.VISIBLE);
-            stopNameTextView.setText("Stop: " + nearestStopName);
+            stopNameTextView.setText("Departure Stop: " + departureStopName);
 
             timeToStopTextView.setVisibility(View.VISIBLE);
             timeToStopTextView.setText("Arrival soon at: " + nearestTimeToStop);
 
-            // Calculate estimated time to wait for the trip
+            // Calculate estimated time to wait for the trip (based on departure time)
             long estimatedTimeToWait = getTimeDifference(currentTime, nearestTimeToStop);
 
             // Update TextView with the estimated time to wait
@@ -463,6 +490,7 @@ public class FindRoute extends AppCompatActivity implements OnMapReadyCallback {
             estimateTimeTextView.setVisibility(View.GONE);
         }
     }
+
 
     private long getTimeDifference(String currentTime, String timeAtStop) {
         try {
